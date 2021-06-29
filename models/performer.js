@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const performerSchema = Schema({
+const performerSchema = new Schema({
   name: {
     type: String,
     required: true,

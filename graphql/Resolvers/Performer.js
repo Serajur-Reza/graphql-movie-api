@@ -33,7 +33,10 @@ module.exports = {
     // })
   },
 
-  createPerformer: async (args) => {
+  createPerformer: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error("unauthenticated");
+    }
     try {
       const array = [];
       const searchedMovies = await Movie.find((err, data) => {

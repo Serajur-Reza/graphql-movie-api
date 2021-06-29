@@ -10,7 +10,10 @@ module.exports = {
       console.log(err.message);
     }
   },
-  createMovie: async (args) => {
+  createMovie: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error("unauthenticated");
+    }
     const movie = new Movie({
       title: args.movieInput.title,
       cast: args.movieInput.cast,
@@ -25,9 +28,13 @@ module.exports = {
     } catch (err) {
       console.log(err.message);
     }
+    
   },
 
-  deleteMovie: async(args)=>{
+  deleteMovie: async(args, req)=>{
+    if (!req.isAuth) {
+      throw new Error("unauthenticated");
+    }
     try{
       const movie = await Movie.findById( args.movieId )
       const result = transformMovies(movie)

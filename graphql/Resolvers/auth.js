@@ -8,7 +8,7 @@ module.exports = {
     try{
       const existingUser = await User.findOne({email: args.userInput.email})
 
-      if(exisgingUser){
+      if(existingUser){
         throw new Error("user already exist")
       }
 
@@ -45,10 +45,14 @@ module.exports = {
       throw new Error("Password does not match")
     }
 
-    const token = jwt.sign({userId: user.id, email: user.email}, "somesecretkey",{
-      expiresIn: '1h'
-    })
+    const token = jwt.sign(
+      { userId: user.id, email: user.email },
+      process.env.SECRET_KEY,
+      {
+        expiresIn: "1h",
+      }
+    );
 
-    return {userId: user.id, token: token, tokenExpiration: 1}
+    return { userId: user.id, token: token, tokenExpiration: 1 };
   }
 }

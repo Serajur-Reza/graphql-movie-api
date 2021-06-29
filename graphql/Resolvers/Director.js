@@ -20,7 +20,10 @@ module.exports = {
     }
   },
 
-  createDirector: async (args) => {
+  createDirector: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error("unauthenticated");
+    }
 
     try {
       const searchedMovies = await Movie.find({

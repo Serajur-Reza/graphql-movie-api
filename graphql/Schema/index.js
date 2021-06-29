@@ -21,6 +21,17 @@ module.exports = buildSchema(`
         movies: [Movie!]!
       }
 
+      type User{
+        _id: ID
+        email: String!
+        password: String!
+      }
+
+      type AuthData{
+        userId: ID!
+        token: String!
+        tokenExpiration: Int!
+      }
 
       input MovieInput{
         title: String!
@@ -46,7 +57,7 @@ module.exports = buildSchema(`
         movies: [Movie!]!
         directors: [Director!]!
         performers: [Performer!]!
-        
+        login(email: String!, password: String!): AuthData!
       }
 
       type RootMutation{
@@ -54,6 +65,8 @@ module.exports = buildSchema(`
         createDirector(directorInput: DirectorInput): Director!
         createPerformer(performerInput: PerformerInput): Performer!
         deleteMovie(movieId: ID!): Movie!
+
+        createUser(userInput:UserInput): User!
       }
 
       schema{
